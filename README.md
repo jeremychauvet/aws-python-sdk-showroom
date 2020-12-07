@@ -1,3 +1,3 @@
-# template-showroom
+# AWS Python SDK showroom
 
-This repository is a template to quickly start new showroom projects.
+This repository store code examples to interact with AWS with Python SDK.
