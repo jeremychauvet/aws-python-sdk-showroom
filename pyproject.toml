@@ -1,0 +1,18 @@
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
+include = './'
+exclude = '''
+/(
+    \.editorconfig
+  | \.git
+  | \.pre-commit-config.yaml
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | Makefile
+  | build
+  | dist
+)/
+'''
