@@ -1,0 +1,4 @@
+Faker
+boto3
+botocore
+faker-credit-score
