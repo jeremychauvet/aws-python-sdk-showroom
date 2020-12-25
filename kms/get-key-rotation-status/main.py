@@ -1,8 +1,10 @@
+#!/usr/bin/env python3.9
+# -*- coding: utf-8 -*-
+
 import boto3
 import botocore
 
 # This function list all KMS keys with no key rotation enable.
-
 client = boto3.client("kms", region_name="eu-central-1")
 
 
