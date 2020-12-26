@@ -25,19 +25,20 @@ def insert_messages_in_queue():
         fake.add_provider(CreditScore)
 
         for message_number in range(NUMBER_OF_MESSAGES_TO_SEND):
-            message = (
-                str(fake.credit_score_name())
-                + " - "
-                + str(fake.credit_score_provider())
-                + " - "
-                + str(fake.credit_score())
-            )
+            payload = {
+                "credit_score": {
+                    "name": str(fake.credit_score_name()),
+                    "provider": str(fake.credit_score_provider()),
+                    "score": str(fake.credit_score()),
+                }
+            }
+
             hash = secrets.token_hex(nbytes=16)
-            print('[INFO] Message : ' + message)
+            print('[INFO] Message : ' + str(payload))
             print('[INFO] Hash : ' + hash)
             send_message_response = client.send_message(
                 QueueUrl=queue_url,
-                MessageBody=message,
+                MessageBody=str(payload),
                 MessageGroupId=hash,
                 MessageDeduplicationId=hash,
             )
