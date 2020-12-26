@@ -4,6 +4,7 @@
 import secrets
 import sys
 import boto3
+import json
 from time import sleep
 from faker import Faker
 from faker_credit_score import CreditScore
@@ -13,7 +14,7 @@ client = boto3.client("sqs", region_name="eu-central-1")
 
 # Variables.
 QUEUE_NAME = "order.fifo"
-NUMBER_OF_MESSAGES_TO_SEND = 10
+NUMBER_OF_MESSAGES_TO_SEND = 1
 
 
 def insert_messages_in_queue():
@@ -26,10 +27,10 @@ def insert_messages_in_queue():
 
         for message_number in range(NUMBER_OF_MESSAGES_TO_SEND):
             payload = {
-                "credit_score": {
-                    "name": str(fake.credit_score_name()),
-                    "provider": str(fake.credit_score_provider()),
-                    "score": str(fake.credit_score()),
+                'credit_score': {
+                    'name': str(fake.credit_score_name()),
+                    'provider': str(fake.credit_score_provider()),
+                    'score': str(fake.credit_score()),
                 }
             }
 
@@ -38,7 +39,7 @@ def insert_messages_in_queue():
             print('[INFO] Hash : ' + hash)
             send_message_response = client.send_message(
                 QueueUrl=queue_url,
-                MessageBody=str(payload),
+                MessageBody=json.dumps(payload),
                 MessageGroupId=hash,
                 MessageDeduplicationId=hash,
             )
