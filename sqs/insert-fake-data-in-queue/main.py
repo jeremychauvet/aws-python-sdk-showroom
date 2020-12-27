@@ -35,7 +35,7 @@ def insert_messages_in_queue():
                 }
             }
             # Convert dictionnary in JSON.
-            payload = json.dumps(payload, indent=2)
+            payload = json.dumps(payload)
             # Create hash for MessageDeduplicationId as queue is FIFO.
             hash = secrets.token_hex(nbytes=16)
             print('[INFO] Message : ' + str(payload))
