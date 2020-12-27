@@ -22,24 +22,28 @@ def insert_messages_in_queue():
         get_queue_url_response = client.get_queue_url(QueueName=QUEUE_NAME)
         queue_url = get_queue_url_response["QueueUrl"]
 
+        # Import library to insert fake datas.
         fake = Faker()
         fake.add_provider(CreditScore)
 
         for message_number in range(NUMBER_OF_MESSAGES_TO_SEND):
             payload = {
-                'credit_score': {
-                    'name': str(fake.credit_score_name()),
-                    'provider': str(fake.credit_score_provider()),
-                    'score': str(fake.credit_score()),
+                "credit_score": {
+                    "name": str(fake.credit_score_name()),
+                    "provider": str(fake.credit_score_provider()),
+                    "score": str(fake.credit_score()),
                 }
             }
-
+            # Convert dictionnary in JSON.
+            payload = json.dumps(payload, indent=2)
+            # Create hash for MessageDeduplicationId as queue is FIFO.
             hash = secrets.token_hex(nbytes=16)
             print('[INFO] Message : ' + str(payload))
             print('[INFO] Hash : ' + hash)
+            # Sent message to queue.
             send_message_response = client.send_message(
                 QueueUrl=queue_url,
-                MessageBody=json.dumps(payload),
+                MessageBody=payload,
                 MessageGroupId=hash,
                 MessageDeduplicationId=hash,
             )
