@@ -1,4 +1,4 @@
-# Get key rotation status
+# Insert fake data in queue
 
 This function insert fake datas in a SQS queue.
 For testing purpose, datas insert are fake credit scores.
