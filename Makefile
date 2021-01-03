@@ -16,3 +16,9 @@ get-key-rotation-status:
 
 insert-fake-data-in-queue:
 	cd sqs/insert-fake-data-in-queue && $(INSTALL_CMD) && $(RUN_CMD)
+
+# Cognito
+.PHONY: get-parameters
+
+get-parameters:
+	cd cognito/get-parameters && $(INSTALL_CMD) && $(RUN_CMD)
